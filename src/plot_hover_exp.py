@@ -9,7 +9,7 @@ YLIM_MAX = 60.0
 
 matplotlib.rcParams['ps.useafm'] = True
 matplotlib.rcParams['pdf.use14corefonts'] = True
-# matplotlib.rcParams['text.usetex'] = True
+matplotlib.rcParams['text.usetex'] = True
 plt.rcParams.update({'font.size': 15})
 
 def plot_data(seeds):
