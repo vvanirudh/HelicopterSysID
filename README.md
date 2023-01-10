@@ -40,5 +40,9 @@ self.Fz = np.array([-9.81, -0.0005, -27.5]) * self.m
 ```
 
 The objective is encoded using a quadratic function as follows:
-$$ cost(x, u) = (sum_{t=1}^{H-1} x_t^T Q x_t + u_t^T R u_t) + x_H^T Q_f x_H $$
+
+```math
+cost(x, u) = (sum_{t=1}^{H-1} x_t^T Q x_t + u_t^T R u_t) + x_H^T Q_f x_H
+```
+
 i.e. we penalize any deviation from origin, and any control effort expended.
