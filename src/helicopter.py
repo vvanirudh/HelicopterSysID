@@ -47,6 +47,10 @@ class HelicopterModel:
             ]
         )
 
+    def random_params(self):
+        N = self.params.shape[0]
+        return self.params + 0.1 * np.random.randn(N)
+
 
 class ParameterizedHelicopterModel(HelicopterModel):
     def __init__(self, params: np.ndarray):

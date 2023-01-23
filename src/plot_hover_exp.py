@@ -12,6 +12,10 @@ matplotlib.rcParams['pdf.use14corefonts'] = True
 matplotlib.rcParams['text.usetex'] = True
 plt.rcParams.update({'font.size': 15})
 
+CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
+                  '#f781bf', '#a65628', '#984ea3',
+                  '#999999', '#e41a1c', '#dede00']
+
 def plot_data(seeds):
     ag_costs = []
     pdl_costs = []
@@ -46,12 +50,12 @@ def plot_data(seeds):
 
     plt.clf()
     xrange = np.arange(len(ag_mean_costs)) * DEFAULT_NUM_SAMPLES_PER_ITERATION
-    plt.plot(xrange, ag_mean_costs, label="SysID", color="blue")
-    plt.fill_between(xrange, ag_mean_costs - ag_std_costs, ag_mean_costs + ag_std_costs, color="blue", alpha=0.2)
-    plt.plot(xrange, pdl_mean_costs, label="Efficient SysID", color="green")
-    plt.fill_between(xrange, pdl_mean_costs - pdl_std_costs, pdl_mean_costs + pdl_std_costs, color="green", alpha=0.2)
-    plt.plot(xrange, best_mean_costs, label="Opt", color="red")
-    plt.fill_between(xrange, best_mean_costs - best_std_costs, best_mean_costs + best_std_costs, color="red", alpha=0.2)
+    plt.plot(xrange, ag_mean_costs, label="Traditional SysID", color=CB_color_cycle[0])
+    plt.fill_between(xrange, ag_mean_costs - ag_std_costs, ag_mean_costs + ag_std_costs, color=CB_color_cycle[0], alpha=0.2)
+    plt.plot(xrange, pdl_mean_costs, label="Efficient SysID", color=CB_color_cycle[1])
+    plt.fill_between(xrange, pdl_mean_costs - pdl_std_costs, pdl_mean_costs + pdl_std_costs, color=CB_color_cycle[1], alpha=0.2)
+    plt.plot(xrange, best_mean_costs, label="Expert", color=CB_color_cycle[2])
+    plt.fill_between(xrange, best_mean_costs - best_std_costs, best_mean_costs + best_std_costs, color=CB_color_cycle[2], alpha=0.2)
     plt.ylim([YLIM_MIN, YLIM_MAX])
     plt.xlabel("Number of real world interactions")
     plt.ylabel("Cost of policy in real world")
@@ -61,10 +65,10 @@ def plot_data(seeds):
     plt.savefig("hover_exp.png")
 
     plt.clf()
-    plt.plot(xrange, ag_mean_lqr_calls, label="SysID", color="blue")
-    plt.fill_between(xrange, ag_mean_lqr_calls - ag_std_lqr_calls, ag_mean_lqr_calls + ag_std_lqr_calls, color="blue", alpha=0.2)
-    plt.plot(xrange, pdl_mean_lqr_calls, label="Efficient SysID", color="green")
-    plt.fill_between(xrange, pdl_mean_lqr_calls - pdl_std_lqr_calls, pdl_mean_lqr_calls + pdl_std_lqr_calls, color="green", alpha=0.2)
+    plt.plot(xrange, ag_mean_lqr_calls, label="Traditional SysID", color=CB_color_cycle[0])
+    plt.fill_between(xrange, ag_mean_lqr_calls - ag_std_lqr_calls, ag_mean_lqr_calls + ag_std_lqr_calls, color=CB_color_cycle[0], alpha=0.2)
+    plt.plot(xrange, pdl_mean_lqr_calls, label="Efficient SysID", color=CB_color_cycle[1])
+    plt.fill_between(xrange, pdl_mean_lqr_calls - pdl_std_lqr_calls, pdl_mean_lqr_calls + pdl_std_lqr_calls, color=CB_color_cycle[1], alpha=0.2)
     plt.xlabel("Number of real world interactions")
     plt.ylabel("Number of LQR solver calls")
     plt.legend()
@@ -73,10 +77,10 @@ def plot_data(seeds):
     plt.savefig("hover_exp_lqr_calls.png")
 
     plt.clf()
-    plt.plot(xrange, ag_mean_costs_model, label="SysID", color="blue")
-    plt.fill_between(xrange, ag_mean_costs_model - ag_std_costs_model, ag_mean_costs_model + ag_std_costs_model, color="blue", alpha=0.2)
-    plt.plot(xrange, pdl_mean_costs_model, label="Efficient SysID", color="green")
-    plt.fill_between(xrange, pdl_mean_costs_model - pdl_std_costs_model, pdl_mean_costs_model + pdl_std_costs_model, color="green", alpha=0.2)
+    plt.plot(xrange, ag_mean_costs_model, label="Traditional SysID", color=CB_color_cycle[0])
+    plt.fill_between(xrange, ag_mean_costs_model - ag_std_costs_model, ag_mean_costs_model + ag_std_costs_model, color=CB_color_cycle[0], alpha=0.2)
+    plt.plot(xrange, pdl_mean_costs_model, label="Efficient SysID", color=CB_color_cycle[1])
+    plt.fill_between(xrange, pdl_mean_costs_model - pdl_std_costs_model, pdl_mean_costs_model + pdl_std_costs_model, color=CB_color_cycle[1], alpha=0.2)
     plt.plot(xrange, ag_mean_expert_cost_model, label="Expert", color="orange")
     plt.fill_between(xrange, ag_mean_expert_cost_model - ag_std_expert_cost_model, ag_mean_expert_cost_model + ag_std_expert_cost_model, color="orange", alpha=0.2)
     plt.ylim([YLIM_MIN, YLIM_MAX])
@@ -109,18 +113,18 @@ def plot_hover_exp_costs_lqr_calls(seed: int):
     xrange = np.arange(len(ag_costs)) * DEFAULT_NUM_SAMPLES_PER_ITERATION
     plt.clf()
     plt.plot(xrange, ag_costs,
-             label="SysID", color="blue", alpha=1.0)
-    # plt.plot(xrange, ag_costs, color="blue", alpha=0.2)
+             label="SysID", color=CB_color_cycle[0], alpha=1.0)
+    # plt.plot(xrange, ag_costs, color=CB_color_cycle[0], alpha=0.2)
     plt.plot(
-        xrange, pdl_costs, label="Efficient SysID", color="green", alpha=1.0
+        xrange, pdl_costs, label="Efficient SysID", color=CB_color_cycle[1], alpha=1.0
     )
-    # plt.plot(xrange, pdl_costs, color="green", alpha=0.2)
+    # plt.plot(xrange, pdl_costs, color=CB_color_cycle[1], alpha=0.2)
     plt.plot(
         xrange,
         [best_cost for _ in range(len(ag_costs))],
         "--",
         label="Opt",
-        color="red",
+        color=CB_color_cycle[2],
     )
     plt.legend()
     plt.xlabel("Number of real world interactions")
@@ -131,8 +135,8 @@ def plot_hover_exp_costs_lqr_calls(seed: int):
     plt.savefig(f"hover_exp_{seed}.png")
 
     plt.clf()
-    plt.plot(xrange, ag_lqr_calls, label="SysID", color="blue")
-    plt.plot(xrange, pdl_lqr_calls, label="Efficient SysID", color="green")
+    plt.plot(xrange, ag_lqr_calls, label="SysID", color=CB_color_cycle[0])
+    plt.plot(xrange, pdl_lqr_calls, label="Efficient SysID", color=CB_color_cycle[1])
     plt.legend()
     plt.xlabel("Number of real world interactions")
     plt.ylabel("Number of LQR solver calls")
@@ -173,8 +177,8 @@ def plot_hover_exp_planning_model_error(seed: int):
 
 if __name__ == "__main__":
     seeds = range(10)
-    # for seed in seeds:
-    #     plot_hover_exp_costs_lqr_calls(seed)
-    #     plot_hover_exp_planning_model_error(seed)
+    for seed in seeds:
+        plot_hover_exp_costs_lqr_calls(seed)
+        plot_hover_exp_planning_model_error(seed)
 
     plot_data(seeds)

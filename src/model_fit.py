@@ -1,10 +1,12 @@
 import numpy as np
+import copy
 from collections import deque
 from scipy.optimize import minimize
 
 from helicopter import ParameterizedHelicopterModel, HelicopterModel, step_batch_fn
 from hover import DT
 
+NUM_RANDOM_RESTARTS = 4
 
 def initial_model():
     true_model = HelicopterModel()
@@ -48,4 +50,21 @@ def fit_model(dataset, nominal_model):
     )
 
     params = result.x.copy()
+    obj = copy.deepcopy(result.fun)
+
+    # Run optimization from random starts to ensure global optimization
+    for _ in range(NUM_RANDOM_RESTARTS):
+        result = minimize(
+            loss_fn,
+            nominal_model.random_params(),
+            method="BFGS",
+            options={
+                "disp": False,
+                "gtol": 1e-3,
+            }
+        )
+        if result.fun < obj:
+            params = result.x.copy()
+            obj = copy.deepcopy(result.fun)
+
     return ParameterizedHelicopterModel(params)
