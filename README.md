@@ -49,6 +49,11 @@ i.e. we penalize any deviation from origin, and any control effort expended.
 
 ## Instructions
 
+We use python3.6.9 and you can install dependencies by running
+```
+pip install -r requirements.txt
+```
+
 To run the code, please run 
 ```
 chmod +x run_hover_exps.sh
